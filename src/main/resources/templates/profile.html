@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${sectionName}"></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <link rel="stylesheet" href="/css/profile.css"/>
+    <link rel="stylesheet" href="/css/question.css"/>
+    <script src="/js/jQuery.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:insert="~{head::nav}"/>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 " >
+            <h2><span th:text="${sectionName}"></span></h2>
+            <hr>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section=='questions'}">
+                <div class="media" th:each="dto:${pageDto.data}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded avatar" th:src="${dto.user.avatarUrl}"
+                            >
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <a th:href="'/question/'+${dto.id}"><h4 class="media-heading" th:text="${dto.title}"> </h4></a>
+                        <span th:text="${dto.description}"> </span><br>
+                        <span class="text-desc"><span th:text="${dto.user.name}"></span>发起了问题 • <span
+                                th:text="${dto.likeCount }">0</span> 人关注 • <span th:text="${dto.viewCount }">0</span>
+                        个回复 • <span th:text="${dto.commentCount }">0</span> 次浏览 • <span
+                                    th:text="${#dates.format(dto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span> •
+                          <a th:href="'/publish/'+${dto.id}" class="blogmenu"
+                             th:if="${session.user!=null&&session.user.accountid==dto.user.accountid}"><span
+                                  class="glyphicon glyphicon-pencil">编辑</span></a>
+                    </span>
+                    </div>
+                    <hr>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li th:if="${pageDto.showPre}">
+                            <a href="#"  th:href="'/?page='+(${pageDto.currentPage}-1)"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="page:${pageDto.pages}" th:class="${pageDto.currentPage==page}?'active':''">
+                            <a th:href="''+${section}+'?page='+${page}" th:text="${page}"></a></li>
+                        <li th:if="${pageDto.showNext}">
+                            <a   th:href="'/?page='+(${pageDto.currentPage}+1)"
+                                aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!--回复div-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" th:if="${section=='replys'}">
+                回复通知内容
+                <span class="badge" th:text="${unreadNotiyCount}"></span>
+                <ul class="list-group notifyUl">
+                    <li class="list-group-item list-group-item-success"  th:each="notify:${pageDto.data}"
+                        th:class="${notify.staus==0}?'active list-group-item ':' list-group-item  list-group-item-success'">
+                        <a  th:href="'/notify/'+${notify.id}">
+                            <span th:text="${notify.notifier.name}"> </span>向你的<span>"</span><span th:text="${notify.outerTitle}"><span>"</span></span>进行了回复
+                        </a>
+                    </li>
+                </ul>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li th:if="${pageDto.showPre}">
+                            <a href="#" th:href="'/?page='+(${pageDto.currentPage}-1)"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li th:each="page:${pageDto.pages}" th:class="${pageDto.currentPage==page}?'active':''">
+                            <a th:href="''+${section}+'?page='+${page}" th:text="${page}"></a></li>
+                        <li th:if="${pageDto.showNext}">
+                            <a   th:href="'/?page='+(${pageDto.currentPage}+1)"
+                                aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 profile">
+            <div class="list-group section ">
+                <a href="/profile/questions" class="list-group-item " th:class="${section=='questions'}?'active list-group-item ':'list-group-item '">我的问题</a>
+                <a href="/profile/replys" class="list-group-item " th:class="${section=='replys'}?'active list-group-item ':'list-group-item '">最新回复<span class="badge" th:text="${unreadNotiyCount}">0</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

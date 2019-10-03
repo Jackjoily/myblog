@@ -1,0 +1,22 @@
+.main {
+    margin: 30px;
+    background-color: white;
+}
+
+body {
+    background-color: #efefef;
+}
+
+.btn_sub {
+    float: right;
+    margin-bottom: 10px;
+}
+
+.question-tag {
+    margin-right: 10px;
+    color: #2b669a;
+}
+.tagdiv {
+    display: none;
+    margin-top: 10px;
+}

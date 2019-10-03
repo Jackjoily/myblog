@@ -1,0 +1,12 @@
+.profile .section {
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+.notifyUl {
+    margin-top: 10px;
+}
+
+a:visited {
+    text-decoration: none;
+}

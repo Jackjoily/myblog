@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${qdto.title}"></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <link rel="stylesheet" href="/css/question.css"/>
+    <script src="/js/jQuery.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.js" type="application/javascript"></script>
+</head>
+
+<body>
+<div th:insert="~{head::nav}"/>
+<div class="container-fluid main ">
+    <div class="row">
+        <!--左侧div-->
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 profile">
+            <!--正文-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <h3><span th:text="${qdto.title}"></span></h3>
+                <span class="text-desc">
+            作者： <span th:text="${qdto.user.name}"></span> |
+            浏览数：   <span th:text="${qdto.viewCount }">0</span> |
+            发布时间： <span th:text="${#dates.format(qdto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+            </span>
+                <hr/>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " th:text="${qdto.description}">
+                </div>
+                <input type="hidden" th:value="${qdto.id}">
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+                <!--标签所在行-->
+                <span class="label label-info tagspan" th:each="tag:${qdto.tag.split(',')}">
+                        <span class="glyphicon glyphicon-tags ">
+                                    <span th:text="${tag}"></span>
+                        </span>
+
+                 </span>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                    <a th:href="'/publish/'+${qdto.id}" class="blogmenu "
+                       th:if="${session.user!=null&&session.user.accountid==qdto.user.accountid}"><span
+                            class="glyphicon glyphicon-pencil">编辑</span></a>
+                </div>
+            </div>
+            <!--评论框-->
+            <div class="mytitle col-lg-12 col-md-12 col-sm-12 col-xs-12 "><h4><span
+                    th:text="${qdto.commentCount}+'个回复'"></span></h4></div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 myhr"/>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="media contentmedia" th:each="comment:${comments}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-circle avatar" th:src="${comment.user.avatarUrl}"
+                            >
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading">
+                            <span th:text="${comment.user.name}"></span>
+                        </h5>
+                        <div th:text="${comment.content}">/div>
+                        </div>
+                    </div>
+                    <div class="media-c">
+                        <span class="glyphicon glyphicon-thumbs-up  myspan"></span>
+                        <span class="glyphicon glyphicon-comment myspan collapsespan " data-collapse=""
+                              th:data-id="${comment.id}">
+                            <span th:text="${comment.commentCount}"></span></span>
+                        <span class="pull-right myspan"
+                              th:text="${#dates.format(comment.gmtCreate,'yyyy-MM-dd')}"></span>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse secondpinglun"
+                         th:id="'comment-'+${comment.id}">
+                        <!--二级评论列表-->
+
+                        <!--二级评论回复框-->
+                    </div>
+                </div>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 "/>
+                <!--回复框-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " id="comment_section">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object img-rounded avatar" th:src="${qdto.user.avatarUrl}"
+                                >
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h5 class="media-heading">
+                                <span th:text="${qdto.user.name}"></span>
+                            </h5>
+                        </div>
+                    </div>
+                    <textarea class="form-control commenttext" rows="6"></textarea>
+                    <button type="button" class="btn btn-success mybtn">回复</button>
+                </div>
+            </div>
+        </div>
+        <!--右侧div-->
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <h4>发起人</h4>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-circle avatar" th:src="${qdto.user.avatarUrl}"
+                            >
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading">
+                            <span th:text="${qdto.user.name}"></span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <h4>相关问题</h4>
+                <ul style="list-style: none">
+                    <li th:each="related:${relatedQuesions}">
+                        <a style="text-decoration:none;font-size: 10px" th:href="'/question/'+${related.id}"th:text="${related.title}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        //一级评论提交事件
+        $(".mybtn").click(function () {
+            var questionId = $("input:hidden").val();
+            var content = $(".commenttext").val();
+            comment2target(questionId, 2, content);
+        })
+        $(".collapsespan").click(function () {
+                var id = $(this).attr("data-id");
+                var collpase = $(this).attr("data-collapse");
+                var commentbody = $("#comment-" + id);
+                if (collpase != "") {
+                    commentbody.removeClass("in");
+                    $(this).attr("data-collapse", "");
+                    commentbody.empty();
+                }
+                else {
+                    // 展开二级评论
+                    $.getJSON("/comment/" + id, function (data) {
+                        var commentbody = $("#comment-" + id);
+                        $.each(data.data, function (i, comment) {
+                            comment = eval(comment);
+                            var time = formatTimestamp(comment.gmtCreate);
+                            var secondcomment = $("<div class='media' > <div class='media-left'><a href='#'> <img class='media-object img-circle avatar' src='" + comment.user.avatarUrl + "'> </a> </div>" +
+                                "<div class='media-body'><h5 class='media-heading'><span>" + comment.user.name + "</span><div>" + comment.content + "</div> </div> <div class='media-c'>" +
+                                "<span class='pull-right myspan'>" + time + "</span><hr>");
+                            commentbody.append(secondcomment);
+                        })
+                        var input = $("<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'> " +
+                            "<input type='text' id='input-" + id + "' class='form-control' placeholder='请输入你的评论' />" +
+                            "<button  type='button' data-id='" + id + "' class='btn btn-success pull-right commentbtn' style='margin: 10px 0;'> 发布 </button></div>");
+                        commentbody.append(input);
+                    })
+                    commentbody.addClass("in");
+                    $(this).attr("data-collapse", "in");
+                }
+            }
+        )
+
+        //二级评论提交事件
+        $(document).on("click", '.commentbtn', function () {
+            var id = $(this).attr("data-id");
+            var content = $("#input-" + id).val();
+            comment(id, content)
+        })
+
+
+    })
+
+    function formatTimestamp(timestamp) {
+        var dateObj = new Date(timestamp);
+        var year = dateObj.getYear() + 1900;
+        var month = dateObj.getMonth() + 1;
+        var theDate = dateObj.getDate();
+        var hour = dateObj.getHours();
+        var minute = dateObj.getMinutes();
+        var second = dateObj.getSeconds();
+        return year + "-" + month + "-" + theDate;
+    }
+
+    function comment2target(targetId, type, content) {
+        if (!content) {
+            alert("不能回复空内容")
+            return;
+        }
+        $.ajax({
+            url: "/comment",
+            type: "post",
+            data: JSON.stringify({parentId: targetId, content: content, type: type}),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+                if (result.code == 200) {
+                    // $("#comment_section").hide();
+                    window.location.reload();
+                } else {
+                    if (result.code == 2003) {
+                        var isAccepted = confirm(result.message);
+                        if (isAccepted) {
+                            window.open("https://github.com/login/oauth/authorize?client_id=6e23ffda40455e90c0aa&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
+                            window.localStorage.setItem("closable", true);
+                        }
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            }
+        })
+
+    }
+
+    function comment(commentId, content) {
+        comment2target(commentId, 1, content);
+    }
+
+    /**
+     * 展开二级评论
+     */
+</script>
+</body>
+</html>

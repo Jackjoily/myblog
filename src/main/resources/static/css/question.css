@@ -1,0 +1,49 @@
+.blogmenu {
+    color: #999;
+    font-size: 12px;
+}
+
+.media-body {
+    padding-left: 2px;
+    padding-top: 10px;
+}
+
+.commenttext {
+    margin: 10px 0;
+}
+
+.mybtn {
+    float: right;
+    margin-top: 10px;
+}
+.myhr{
+    margin-top: 0;
+}
+.mytitle{
+    margin-top: 20px;
+}
+.myspan{
+    margin-left: 15px;
+    color: #999999;
+    font-size: 15px;
+    cursor: pointer;
+}
+.myspan:hover{
+    color:#499ef3;
+}
+
+.contentmedia{
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eeeeee ;
+    padding-bottom: 5px;
+}
+.secondpinglun{
+    margin-top: 10px;
+    border: 2px solid #eee;
+    padding-top: 10px;
+    border-radius: 5px;
+     margin-bottom: 15px;
+}
+.tagspan{
+    margin-right: 5px;
+}
