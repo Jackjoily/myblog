@@ -29,7 +29,6 @@ public class AuthController {
     private String redirectUrl;
     @Autowired
     UserService userService;
-
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,

@@ -26,7 +26,7 @@ public class NotiyController {
         example.createCriteria().andIdEqualTo(notification.getId());
         notificationMapper.updateByExample(notification, example);
         if(notification.getType()==1){
-            return "redirect:/question/"+id;
+            return "redirect:/question/"+notification.getOuterId();
         }else{
             Comment comment=commentMapper.selectByPrimaryKey(notification.getOuterId());
             return "redirect:/question/"+comment.getParentId();

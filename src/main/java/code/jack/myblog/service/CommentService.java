@@ -69,7 +69,7 @@ public class CommentService {
                 notification.setType(NotificationEnum.REPLY_COMMENT.getType());
                 notification.setOuterTitle(dbcomment.getContent());
                 notification.setNotifier(comment.getCommentator());
-                notification.setOuterId(dbcomment.getParentId());
+                notification.setOuterId(dbcomment.getId());
                 notification.setStaus(NotificationStausEnum.UNREAD.getStatus());
                 notification.setReceiver(dbcomment.getCommentator());
                 notificationMapper.insertSelective(notification);

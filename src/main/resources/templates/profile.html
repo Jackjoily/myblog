@@ -65,9 +65,10 @@
                 <span class="badge" th:text="${unreadNotiyCount}"></span>
                 <ul class="list-group notifyUl">
                     <li class="list-group-item list-group-item-success"  th:each="notify:${pageDto.data}"
-                        th:class="${notify.staus==0}?'active list-group-item ':' list-group-item  list-group-item-success'">
-                        <a  th:href="'/notify/'+${notify.id}">
+                    >
+                        <a  class="notifya" th:href="'/notify/'+${notify.id}">
                             <span th:text="${notify.notifier.name}"> </span>向你的<span>"</span><span th:text="${notify.outerTitle}"><span>"</span></span>进行了回复
+                            <span th:if="${notify.staus==0}" class="label label-danger">未读</span>
                         </a>
                     </li>
                 </ul>

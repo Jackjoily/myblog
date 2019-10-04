@@ -24,7 +24,7 @@ public class NotificationService {
         //page
         int offset = size * (page - 1);
         NotificationExample notificationExample = new NotificationExample();
-//        notificationExample.setOrderByClause("gmt_create desc");
+        notificationExample.setOrderByClause("gmt_create desc");
         notificationExample .createCriteria().andReceiverEqualTo(id);
         List<Notification> notificationList = notificationMapper.selectByExampleWithRowbounds(notificationExample, new RowBounds(page-1, size));
         List<NotificationDto> notificationDtoList = new ArrayList<>();

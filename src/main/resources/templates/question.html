@@ -7,8 +7,13 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/index.css"/>
     <link rel="stylesheet" href="/css/question.css"/>
+    <link rel="stylesheet" href="/css/editormd.min.css"/>
+    <link rel="stylesheet" href="/css/editormd.preview.css"/>
     <script src="/js/jQuery.js" type="application/javascript"></script>
     <script src="/js/bootstrap.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
+    <script src="/lib/marked.min.js" type="application/javascript"></script>
+    <script src="/lib/prettify.min.js" type="application/javascript"></script>
 </head>
 
 <body>
@@ -26,8 +31,17 @@
             发布时间： <span th:text="${#dates.format(qdto.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
             </span>
                 <hr/>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 " th:text="${qdto.description}">
+                <div  th:id="questionview"  class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                    <textarea th:text="${qdto.description}"></textarea>
                 </div>
+                <script>
+                    $(document).ready(function () {
+                    editormd.markdownToHTML("questionview",
+                        {
+
+                            })
+                    })
+                </script>
                 <input type="hidden" th:value="${qdto.id}">
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
                 <!--标签所在行-->
@@ -35,7 +49,6 @@
                         <span class="glyphicon glyphicon-tags ">
                                     <span th:text="${tag}"></span>
                         </span>
-
                  </span>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12"/>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -74,7 +87,6 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse secondpinglun"
                          th:id="'comment-'+${comment.id}">
                         <!--二级评论列表-->
-
                         <!--二级评论回复框-->
                     </div>
                 </div>
@@ -168,7 +180,6 @@
                 }
             }
         )
-
         //二级评论提交事件
         $(document).on("click", '.commentbtn', function () {
             var id = $(this).attr("data-id");
@@ -178,7 +189,6 @@
 
 
     })
-
     function formatTimestamp(timestamp) {
         var dateObj = new Date(timestamp);
         var year = dateObj.getYear() + 1900;
