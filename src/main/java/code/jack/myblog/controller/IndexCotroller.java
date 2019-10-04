@@ -32,8 +32,10 @@ public class IndexCotroller {
             , Model model
             , @RequestParam(name = "page", defaultValue = "1") Integer page
             , @RequestParam(name = "size", defaultValue = "5") Integer size
+            ,@RequestParam(name="search",defaultValue = "") String search
+
     ) {
-        PageDto pageDto = questionService.getQuestionDtoList(page,size);
+        PageDto pageDto = questionService.getQuestionDtoList(search,page,size);
         model.addAttribute("pageDto", pageDto);
         return "index";
     }

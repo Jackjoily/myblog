@@ -2,6 +2,7 @@ package code.jack.myblog.service;
 
 import code.jack.myblog.dto.PageDto;
 import code.jack.myblog.dto.QuestionDto;
+import code.jack.myblog.dto.QuestionQueryDto;
 import code.jack.myblog.exception.CustomizeErrorCode;
 import code.jack.myblog.exception.CustomizeException;
 import code.jack.myblog.mapper.QuestionExtMapper;
@@ -33,12 +34,22 @@ public class QuestionService {
     @Autowired
     QuestionExtMapper questionExtMapper;
 
-    public PageDto getQuestionDtoList(Integer page, Integer size) {
+    public PageDto getQuestionDtoList(String search,Integer page, Integer size) {
         //page
+        QuestionQueryDto questionQueryDto = new QuestionQueryDto();
+
+        if(StringUtils.isNotBlank(search)){
+            String[] split = StringUtils.split(search ," ");
+             search = Arrays.stream(split).collect(Collectors.joining("|"));
+            questionQueryDto.setSearch(search);
+
+        }
         int offset = size * (page - 1);
+        questionQueryDto.setPage(offset);
+        questionQueryDto.setSize(size);
         QuestionExample questionExample = new QuestionExample();
         questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questionList = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample, new RowBounds(offset, size));
+        List<Question> questionList = questionExtMapper.selectBySearch(questionQueryDto );
         List<QuestionDto> questionDtoList = new ArrayList<>();
         PageDto<QuestionDto> pageDto = new PageDto();
         if (questionList != null) {
@@ -52,7 +63,8 @@ public class QuestionService {
                 questionDtoList.add(dto);
             }
             pageDto.setData(questionDtoList);
-            int totalcount = (int) questionMapper.countByExample(new QuestionExample());
+
+            int totalcount =questionExtMapper.countBySearch(questionQueryDto);
             pageDto.setPagein(totalcount, page, size);
         } else {
             throw new CustomizeException(CustomizeErrorCode.QUESION_NOT_FOUNF);

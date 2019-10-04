@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group" id="question-editor">
                     <label for="description">问题补充{必填，请参照右侧提示}</label>
-                    <textarea  style="display: none" class="form-control" rows="10" type="text" id="description"
+                    <textarea style="display: none" class="form-control" rows="10" type="text" id="description"
                               name="description" th:text="${description}"></textarea>
                 </div>
                 <div class="form-group">
@@ -83,20 +83,21 @@
 
 <script>
     $(document).ready(function () {
-
+        var editor = editormd("question-editor", {
+            width: "100%",
+            height: 350,
+            path: "/lib/",
+            delay: 0,
+            watch: false,
+            placeholder: "请输入问题描述",
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL:"/file/upload"
+        })
     })
 
     function showtagdiv() {
         $(".tagdiv").show();
-
-        var editor=editormd("question-editor",{
-            width:"100%",
-            height:350,
-            path:"/lib/",
-            delay:0,
-            watch:false,
-            placeholder:"请输入问题描述"
-        })
     }
 
     function selectTag(e) {

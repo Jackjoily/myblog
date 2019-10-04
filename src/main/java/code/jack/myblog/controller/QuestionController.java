@@ -34,15 +34,4 @@ public class QuestionController {
         return "question";
     }
 
-    @PostMapping("searchQuestion")
-    @ResponseBody
-    private PageDto searchByTitle(HttpServletRequest request
-            , Model model
-            , @RequestParam(name = "page", defaultValue = "1") Integer page
-            , @RequestParam(name = "size", defaultValue = "5") Integer size
-            , @RequestParam(name="title") String title) {
-        PageDto  pageDto = questionService.getQuestionDtoList(page, size);
-        model.addAttribute("PageDto", pageDto);
-        return pageDto;
-    }
 }
