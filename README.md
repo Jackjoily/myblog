@@ -5,4 +5,5 @@
 github.client.id=
 github.client.secret=
 需要改成你自己的appId和secret
-4.项目并没有写完......
+4.项目并没有写完....
+5.引入了富文本编辑器
