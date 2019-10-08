@@ -1,5 +1,6 @@
 package code.jack.myblog.controller;
 
+import code.jack.myblog.cache.TagCache;
 import code.jack.myblog.dto.PageDto;
 import code.jack.myblog.dto.QuestionDto;
 import code.jack.myblog.mapper.QuestionMapper;
@@ -26,6 +27,7 @@ public class IndexCotroller {
     QuestionService questionService;
     @Autowired
     NotificationService notificationService;
+    TagCache tagCache=new TagCache();
 
     @RequestMapping({"/", "index"})
     public String index(HttpServletRequest request
@@ -37,6 +39,7 @@ public class IndexCotroller {
     ) {
         PageDto pageDto = questionService.getQuestionDtoList(search,page,size);
         model.addAttribute("pageDto", pageDto);
+        model.addAttribute("tagDtos", tagCache.get());
         return "index";
     }
 }

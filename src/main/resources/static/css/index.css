@@ -24,3 +24,12 @@ body {
 .jumbotron{
     margin: 30px;
 }
+.tagdiv{
+
+    margin-top: 50px;
+}
+.tagspan{
+    margin:  2px 15px ;
+    font-size: 15px;
+    cursor: pointer;
+}

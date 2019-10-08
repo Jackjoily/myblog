@@ -1,6 +1,5 @@
 package code.jack.myblog.controller;
 
-import code.jack.myblog.mapper.UserMapper;
 import code.jack.myblog.dto.Accessdto;
 import code.jack.myblog.dto.GithubUser;
 import code.jack.myblog.model.User;
@@ -16,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
-
 @Controller
 public class AuthController {
     @Autowired
@@ -60,6 +58,7 @@ public class AuthController {
             return "redirect:index";
         }
     }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,HttpServletResponse response){
         Cookie cookie=new Cookie("token",null);

@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * 配置拦截器 当访问页面的时候 查看请求是否含有cookie
+ */
 @Component
 public class SessionInterceptor implements HandlerInterceptor {
 
