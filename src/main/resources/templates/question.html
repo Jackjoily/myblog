@@ -148,7 +148,7 @@
             var questionId = $("input:hidden").val();
             var content = $(".commenttext").val();
             comment2target(questionId, 2, content);
-        })
+        });
         $(".collapsespan").click(function () {
                 var id = $(this).attr("data-id");
                 var collpase = $(this).attr("data-collapse");
@@ -169,26 +169,27 @@
                                 "<div class='media-body'><h5 class='media-heading'><span>" + comment.user.name + "</span><div>" + comment.content + "</div> </div> <div class='media-c'>" +
                                 "<span class='pull-right myspan'>" + time + "</span><hr>");
                             commentbody.append(secondcomment);
-                        })
+                        });
                         var input = $("<div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'> " +
                             "<input type='text' id='input-" + id + "' class='form-control' placeholder='请输入你的评论' />" +
                             "<button  type='button' data-id='" + id + "' class='btn btn-success pull-right commentbtn' style='margin: 10px 0;'> 发布 </button></div>");
                         commentbody.append(input);
-                    })
+                    });
                     commentbody.addClass("in");
                     $(this).attr("data-collapse", "in");
                 }
             }
-        )
+        );
         //二级评论提交事件
         $(document).on("click", '.commentbtn', function () {
             var id = $(this).attr("data-id");
             var content = $("#input-" + id).val();
             comment(id, content)
         })
+      //使用html5原声的websocket
 
 
-    })
+    });
 
     function formatTimestamp(timestamp) {
         var dateObj = new Date(timestamp);
@@ -203,7 +204,7 @@
 
     function comment2target(targetId, type, content) {
         if (!content) {
-            alert("不能回复空内容")
+            alert("不能回复空内容");
             return;
         }
         $.ajax({

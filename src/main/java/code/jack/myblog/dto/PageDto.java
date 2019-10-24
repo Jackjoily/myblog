@@ -76,16 +76,8 @@ public class PageDto<T> {
         }
         Collections.sort(pages);
         //是否展示上一页
-        if (currentPage == 1) {
-            showPre = false;
-        } else {
-            showPre = true;
-        }
+        showPre = currentPage != 1;
         //是否展示下一页
-        if (currentPage == totalPage) {
-            showNext = false;
-        } else {
-            showNext = true;
-        }
+        showNext = currentPage != totalPage;
     }
 }

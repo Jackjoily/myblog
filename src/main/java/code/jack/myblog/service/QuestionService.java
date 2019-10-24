@@ -77,7 +77,7 @@ public class QuestionService {
         int offset = size * (page - 1);
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(id);
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(page, size));
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
         List<QuestionDto> questionDtoList = new ArrayList<>();
         PageDto<QuestionDto> pageDto = new PageDto<>();
         for (Question question : questionList) {

@@ -33,3 +33,6 @@ body {
     font-size: 15px;
     cursor: pointer;
 }
+.gray-bg{
+    background-color:rgb(240, 243, 244);
+}

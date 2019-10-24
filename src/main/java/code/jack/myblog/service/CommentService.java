@@ -34,15 +34,13 @@ public class CommentService {
     private CommentExtMapper commentExtMapper;
     @Autowired
     private NotificationMapper notificationMapper;
+    @Autowired
+    private WebSocket webSocket;
 
     public boolean ifExistsParentId(Integer parentId) {
         Question question = questionMapper.selectByPrimaryKey(parentId);
         Comment comment = commentMapper.selectByPrimaryKey(parentId);
-        if (question == null && comment == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return question != null || comment != null;
     }
 
     @Transactional
@@ -73,6 +71,7 @@ public class CommentService {
                 notification.setStaus(NotificationStausEnum.UNREAD.getStatus());
                 notification.setReceiver(dbcomment.getCommentator());
                 notificationMapper.insertSelective(notification);
+                webSocket.sendMessage(notification.getOuterTitle());
             }
         } else {
             //回复问题
@@ -89,6 +88,7 @@ public class CommentService {
             notificationMapper.insertSelective(notification);
             commentMapper.insertSelective(comment);
             questionExtMapper.incComment(notifyquestion);
+            webSocket.sendMessage(notifyquestion.getTitle());
         }
     }
     public List<CommentDto> getCommentByTtype(Integer id,Integer type) {
